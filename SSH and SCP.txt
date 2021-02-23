@@ -1,0 +1,33 @@
+######################SOURCE MACHINE###################
+1. Create private and public key - Give desired path to save keys and go for no password (simply enter)
+ssh-keygen -t rsa -b 4096
+
+2. Share public file to destination server
+
+######################DESTINATION MACHINE###################
+1. Create user , if needed make the password never expiry
+a) To create user
+useradd username
+b) To add password in user profile 
+passwd username
+c) To make password never expiry
+passwd username -x -1
+d) To check user property
+chage -l username
+
+1. Make directory .ssh and file - authorized_keys into home location of user - username
+a) Log in as user and go to home location
+cd $HOME
+b) Create directory .ssh with permission - 700
+mkdir .ssh;chmod 700 .ssh
+c) Go to .ssh directory and create a file - authorized_keys and give permission - 644
+touch authorized_keys;chmod 644 authorized_keys
+d) copy public key into authorized_keys
+#################################################################
+#################################################################
+Once everything done you are all set to SSH and SCP from source to destination machine
+To connect password less
+ssh -i path_to_private_key username@destination_server
+
+To send some file without password or using key
+ssh -i path_to_private_key filename username@destination_server:path_where_to_send (usually home or tmp)
